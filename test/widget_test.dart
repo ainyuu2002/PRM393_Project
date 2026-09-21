@@ -7,24 +7,84 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:prm393_project/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget( MyApp());
+  testWidgets('opens Exercise 1 and displays all core widgets', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.tap(find.text('Exercise 1 - Core Widgets Demo'));
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    expect(find.text('Exercise 1 - Core Widgets Demo'), findsOneWidget);
+    expect(find.byType(Icon), findsWidgets);
+    expect(find.byType(Image), findsOneWidget);
+    expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+    expect(
+      find.ancestor(
+        of: find.byIcon(Icons.play_arrow),
+        matching: find.byType(Stack),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byType(Card), findsOneWidget);
+    expect(find.byType(ListTile), findsOneWidget);
+  });
+
+  testWidgets('opens Exercise 2 and displays all input controls', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Exercise 2 - Input Controls Demo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Exercise 2 - Input Controls Demo'), findsOneWidget);
+    expect(find.byType(Slider), findsOneWidget);
+    expect(find.byType(Switch), findsOneWidget);
+    expect(find.text('Current value: 50'), findsOneWidget);
+    expect(find.text('Is movie active?'), findsOneWidget);
+    expect(find.byType(RadioListTile<String>), findsNWidgets(2));
+    expect(find.text('Selected genre: None'), findsOneWidget);
+    expect(find.text('Open Date Picker'), findsOneWidget);
+  });
+
+  testWidgets('updates values when input controls change', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.tap(find.text('Exercise 2 - Input Controls Demo'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(Switch));
     await tester.pump();
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.tap(find.text('Comedy'));
+    await tester.pump();
+    expect(find.text('Selected genre: Comedy'), findsOneWidget);
+
+    final Slider slider = tester.widget(find.byType(Slider));
+    slider.onChanged!(75);
+    await tester.pump();
+    expect(find.text('Current value: 75'), findsOneWidget);
+  });
+
+  testWidgets('opens DatePicker when the button is tapped', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.tap(find.text('Exercise 2 - Input Controls Demo'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Open Date Picker'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsNothing);
   });
 }
