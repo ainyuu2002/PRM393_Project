@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prm393_project/Widgets/bodyWidget.dart';
 import 'package:prm393_project/Widgets/productWidget.dart';
 
 class Homepage extends StatelessWidget {
@@ -33,12 +34,7 @@ class Homepage extends StatelessWidget {
         //     ),
         //   ),
         // )
-      body: Row(
-        children: [
-          productWidget(),
-          productWidget(),
-        ],
-      )
+      body: Bodywidget()
     );
   }
 }

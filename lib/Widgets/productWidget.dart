@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:prm393_project/models/product.dart';
 
 class productWidget extends StatelessWidget {
-  const productWidget({super.key});
+  final Product product;
+  const productWidget({required this.product,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,45 +11,45 @@ class productWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
+          decoration: BoxDecoration(border: Border.all(style: BorderStyle.solid, color: Colors.redAccent),
+              color: Colors.greenAccent),
         width: 300,
         height: 600,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 8,
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  child: Image.asset(
-                      fit:BoxFit.fill,
-                      'assets/images/images.jpg'
-                  ),
+              flex: 2,
+              child: Container(
+                width: 300,
+                child: Stack(
+                  children: [
+                      Container( //Anh san pham
+                        width: 200,
+                        height: 200,
+                        child: Image.asset(
+                            fit:BoxFit.fill,
+                            '${product.image}'
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: IconButton(onPressed: (){},
+                          hoverColor: Colors.amber,
+                          icon: Icon(Icons.add_shopping_cart),
+                          color: Colors.white,
+                          style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blueAccent)),),
+                      ),
+                    Container(child: Column(
+                      children: [
+                        Text("Name: ${product.name}"),
+                        Text("Price: ${product.price}"),
+                        Text("Description: ${product.description??""}")
+                      ],
+                    ),)
+                    ],
                 ),
               ),
-            ),
-            Expanded(flex: 1, child: Text('Name: Chikawa')),
-            Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(flex: 3, child: Text('Price: ')),
-                  Flexible(flex: 1, child: Text('30\$ ', style: TextStyle(decoration: TextDecoration.lineThrough))),
-                  Flexible(flex: 1, child: Text('20\$'))
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Text(
-                  textAlign: TextAlign.justify,
-                  'Chikawa is Chiwawa, sdfsdkfdkshfkdshfjksdfhsdjkfhsdkjfhsdkfjhsdkjfhsdjkfhsdjkfhdskjfhdskjf'
-                      'dsfkdskfjdshjfkdsjfkdsjfkdslfjsdlkfjsldfjlsdfj'
-                      'dfksdfffffffffffffffffffffsdfse sdfsdfsdf'
-                      'ds dfjsflsejfesilfjsldfkd sdfsdfs'),
             )
           ],
         ),
