@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prm393_project/Screens/homepage.dart';
+import 'package:prm393_project/Screens/product_detail_page.dart';
 
 void main() {
   // List<int> x=[1,3,5,7,9];
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-        home: Homepage()
+        routes: {
+        '/':(context)=>Homepage(),
+        //'detail':(context)=>productDetailPage(product: product),
+    },
     );
   }
 }
