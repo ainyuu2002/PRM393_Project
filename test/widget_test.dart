@@ -87,4 +87,24 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(DatePickerDialog), findsNothing);
   });
+
+  testWidgets('opens Exercise 3 and displays the movie layout', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Exercise 3 - Layout Demo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Exercise 3 - Layout Demo'), findsOneWidget);
+    expect(find.text('Now Playing'), findsOneWidget);
+    expect(find.byType(ListView), findsOneWidget);
+    expect(find.byType(Card), findsNWidgets(4));
+    expect(find.byType(CircleAvatar), findsNWidgets(4));
+    expect(find.text('Avatar'), findsOneWidget);
+    expect(find.text('Inception'), findsOneWidget);
+    expect(find.text('Interstellar'), findsOneWidget);
+    expect(find.text('Joker'), findsOneWidget);
+    expect(find.text('Sample description'), findsNWidgets(4));
+  });
 }
