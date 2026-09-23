@@ -2,22 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:prm393_project/Screens/core_widgets_demo.dart';
 import 'package:prm393_project/Screens/input_controls_demo.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  var currentValue = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellowAccent,
+        backgroundColor: currentValue?Colors.blueAccent:Colors.greenAccent,
         title: Center(child: const Text('Homepage')),
         leading: Icon(Icons.menu),
         actions: [
-          TextButton(
-            style: ButtonStyle(),
-            onPressed: () {},
-            child: Text('Login'),
-          ),
+          // TextButton(
+          //   style: ButtonStyle(),
+          //   onPressed: () {},
+          //   child: Text('Login'),
+          // ),
+          Switch(value: currentValue, onChanged: ((value){
+            setState(() {
+              currentValue=value;
+            });
+          }))
         ],
       ),
       // body: Center(

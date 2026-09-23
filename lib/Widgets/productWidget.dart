@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prm393_project/Screens/product_detail_page.dart';
+import 'package:prm393_project/Widgets/myWidget.dart';
 import 'package:prm393_project/models/product.dart';
 
 class productWidget extends StatelessWidget {
@@ -34,7 +36,11 @@ class productWidget extends StatelessWidget {
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: IconButton(onPressed: (){},
+                        child: IconButton(onPressed: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)=>
+                                  productDetailPage(product: product)));
+                        },
                           hoverColor: Colors.amber,
                           icon: Icon(Icons.add_shopping_cart),
                           color: Colors.white,
@@ -42,6 +48,7 @@ class productWidget extends StatelessWidget {
                       ),
                     Container(child: Column(
                       children: [
+                        likeStarButton(),
                         Text("Name: ${product.name}"),
                         Text("Price: ${product.price}"),
                         Text("Description: ${product.description??""}")
