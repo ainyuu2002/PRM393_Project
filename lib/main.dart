@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prm393_project/Screens/homepage.dart';
+// import 'package:prm393_project/Screens/homepage.dart';
+import 'package:prm393_project/Screens/productHomepage.dart';
 
 void main() {
   // List<int> x=[1,3,5,7,9];
@@ -40,7 +41,8 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: Homepage(isDarkMode: isDarkMode, onThemeChanged: changeTheme),
+      // home: Homepage(isDarkMode: isDarkMode, onThemeChanged: changeTheme),
+      home: const productHomepage(),
     );
   }
 }
