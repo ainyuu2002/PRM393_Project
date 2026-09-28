@@ -107,4 +107,91 @@ void main() {
     expect(find.text('Joker'), findsOneWidget);
     expect(find.text('Sample description'), findsNWidgets(4));
   });
+
+  testWidgets('opens Exercise 4 and changes the application theme', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Exercise 4 - App Structure & Theme'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Exercise 4 - App Structure & Theme'), findsOneWidget);
+    expect(
+      find.text('This is a simple screen with theme toggle.'),
+      findsOneWidget,
+    );
+    expect(find.text('Dark'), findsOneWidget);
+    expect(find.byType(Switch), findsOneWidget);
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+
+    final MaterialApp darkApp = tester.widget(find.byType(MaterialApp));
+    expect(darkApp.themeMode, ThemeMode.dark);
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+
+    await tester.tap(find.byType(Switch));
+    await tester.pumpAndSettle();
+
+    final MaterialApp lightApp = tester.widget(find.byType(MaterialApp));
+    expect(lightApp.themeMode, ThemeMode.light);
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump();
+
+    expect(
+      find.text('Theme changed with the app structure demo.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Exercise 5 displays the corrected scrollable layout', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Exercise 5 - Common UI Fixes'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Correct ListView inside Column using Expanded'),
+      findsOneWidget,
+    );
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+    expect(find.byType(ListView), findsOneWidget);
+    expect(
+      find.ancestor(of: find.byType(ListView), matching: find.byType(Expanded)),
+      findsOneWidget,
+    );
+    expect(find.text('Movie A'), findsOneWidget);
+    expect(find.text('Movie B'), findsOneWidget);
+    expect(find.text('Movie C'), findsOneWidget);
+    expect(find.text('Movie D'), findsOneWidget);
+  });
+
+  testWidgets('Exercise 5 updates state and selects a date', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('Exercise 5 - Common UI Fixes'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('State value: 0'), findsOneWidget);
+    await tester.tap(find.text('Update state'));
+    await tester.pump();
+    expect(find.text('State value: 1'), findsOneWidget);
+
+    await tester.tap(find.text('Open Date Picker'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    expect(find.text('Selected date: Not selected'), findsNothing);
+    expect(find.textContaining('Selected date:'), findsOneWidget);
+  });
 }
