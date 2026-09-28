@@ -4,12 +4,14 @@ class Product{
   final String name;
   final String? image;
   final double price;
+  final int? discountPercent;
   final String? description;
 
-  Product({required this.id, required this.name, this.image, required this.price, this.description});
-  Product toCopy({String? id, String? name, String? image, double? price, String? description}){
+  Product({required this.id, required this.name, this.image, required this.price, this.discountPercent, this.description});
+  Product toCopy({String? id, String? name, String? image, double? price, int? discountPercent, String? description}){
     return Product(id:id??this.id,name:name??this.name,image:image??this.image,
-        price:price??this.price,description:description??this.description);
+        price:price??this.price, discountPercent: discountPercent??this.discountPercent,
+        description:description??this.description);
   }
 
   //Chuyển đổi từ JSON sang đối tượng Product
@@ -18,6 +20,7 @@ class Product{
         name: (json['name']??"") as String,
         image: (json['image']??"") as String,
         price: (json['price'] as num).toDouble(),
+        discountPercent: (json['discountPercent'] as num?)?.toInt(),
         description: (json['description']??"") as String);
   }
   //Chuyển đổi từ Product sang đối tượng JSON
@@ -27,6 +30,7 @@ class Product{
       'name': name,
       'image': image,
       'price': price,
+      'discountPercent': discountPercent,
       'description': description
     };
    }
